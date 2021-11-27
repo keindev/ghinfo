@@ -1,17 +1,37 @@
-# ghinfo
+# Builder
 
-## Table of contents
+Generate .ghinfo files with repo, npm package and media information
 
-### References
 
-- [default](index.md#default)
+## Constructor
 
-### Classes
+```typescript
+new Builder(dir: string, type: string): Builder
+```
 
-- [Builder](classes/builder.md)
+#### Parameters
 
-## References
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dir` | *string* | Directory with media files |
+| `type` | *string* | Repository content type |
 
-### default
+**Returns:** [*Builder*](builder.md)
 
-Renames and exports: [Builder](classes/builder.md)
+## Methods
+
+### build
+
+Build .ghinfo file structure
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `paths` | *string*[] | media file paths |
+| `pkg` | PackageJson | package.json content |
+| `repo` | *string* | repository name |
+
+### generate
+
+create or rewrite .ghinfo file
