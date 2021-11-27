@@ -5,19 +5,23 @@ export enum AvailableMediaFile {
   Preview = 'social-preview',
 }
 
+export interface ILinks {
+  git?: string;
+  homepage?: string;
+  npm?: string;
+}
+
+export type IFiles = {
+  [key in AvailableMediaFile]?: string;
+};
+
 export interface IGitHubInfo {
+  description: string;
+  files: IFiles;
+  keywords?: string[];
+  links: ILinks;
   name: string;
   repo: string;
-  version: string;
   type?: string;
-  description: string;
-  keywords?: string[];
-  links: {
-    git?: string;
-    npm?: string;
-    homepage?: string;
-  };
-  files: {
-    [key in AvailableMediaFile]?: string;
-  };
+  version: string;
 }

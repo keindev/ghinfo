@@ -1,6 +1,6 @@
 import figures from 'figures';
 import { promises as fs } from 'fs';
-import globby from 'globby';
+import { globby } from 'globby';
 import gh from 'parse-github-url';
 import path from 'path';
 import UpdateManager from 'stdout-update';
@@ -19,10 +19,10 @@ const frames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '
 /** Generate .ghinfo files with repo, npm package and media information */
 export class Builder {
   #dir: string;
-  #type: string;
+  #frame = 0;
   #message = '';
   #timer: NodeJS.Timeout | null = null;
-  #frame = 0;
+  #type: string;
 
   /**
    * @param dir - Directory with media files
@@ -31,39 +31,6 @@ export class Builder {
   constructor(dir: string, type: string) {
     this.#dir = path.relative(process.cwd(), dir);
     this.#type = type;
-  }
-
-  /** create or rewrite .ghinfo file */
-  async generate(): Promise<void> {
-    this.start();
-
-    try {
-      const paths = await globby([`${this.#dir}/**/*.*`], { gitignore: false });
-      const data = await fs.readFile(path.resolve(process.cwd(), 'package.json'), 'utf8');
-      const pkg = JSON.parse(data) as PackageJson;
-      const url = typeof pkg.repository === 'object' ? pkg.repository.url : pkg.repository;
-
-      if (url) {
-        const git = gh(url);
-
-        if (git && git.repo) {
-          if (paths.length) {
-            await fs.writeFile(
-              path.relative(process.cwd(), '.ghinfo'),
-              JSON.stringify(this.build(paths, pkg, git.repo), null, INDENT)
-            );
-          }
-
-          this.end();
-        } else {
-          throw new Error('Invalid package repository url!');
-        }
-      } else {
-        throw new Error('Package repository is undefined!');
-      }
-    } catch (error) {
-      this.error(error);
-    }
   }
 
   /**
@@ -101,12 +68,41 @@ export class Builder {
     };
   }
 
-  private start(): void {
-    manager.hook();
+  /** create or rewrite .ghinfo file */
+  async generate(): Promise<void> {
+    this.start();
 
-    this.#timer = setInterval(() => {
-      manager.update([`${frames[(this.#frame = ++this.#frame % frames.length)]} process: ${this.#message}`]);
-    }, TIMEOUT);
+    try {
+      const paths = await globby([`${this.#dir}/**/*.*`], { gitignore: false });
+      const data = await fs.readFile(path.resolve(process.cwd(), 'package.json'), 'utf8');
+      const pkg = JSON.parse(data) as PackageJson;
+      const url = typeof pkg.repository === 'object' ? pkg.repository.url : pkg.repository;
+
+      if (url) {
+        const git = gh(url);
+
+        if (git && git.repo) {
+          if (paths.length) {
+            await fs.writeFile(
+              path.relative(process.cwd(), '.ghinfo'),
+              JSON.stringify(this.build(paths, pkg, git.repo), null, INDENT)
+            );
+          }
+
+          this.end();
+        } else {
+          throw new Error('Invalid package repository url!');
+        }
+      } else {
+        throw new Error('Package repository is undefined!');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        this.end([`${figures.cross} Error!`]);
+
+        throw error;
+      }
+    }
   }
 
   private end(msg = [`${figures.tick} .ghinfo created!`]): void {
@@ -117,10 +113,12 @@ export class Builder {
     }
   }
 
-  private error(error: Error): never {
-    this.end([`${figures.cross} Error!`]);
+  private start(): void {
+    manager.hook();
 
-    throw error;
+    this.#timer = setInterval(() => {
+      manager.update([`${frames[(this.#frame = ++this.#frame % frames.length)]} process: ${this.#message}`]);
+    }, TIMEOUT);
   }
 }
 
