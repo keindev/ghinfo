@@ -51,7 +51,7 @@
   "dependencies": {
     "figures": "^4.0.0",
     "globby": "^12.0.2",
-    "package-json-helper": "^0.10.0",
+    "package-json-helper": "^2.0.0",
     "parse-github-url": "^1.0.2",
     "stdout-update": "^2.0.4",
     "yargs": "^17.2.1"
