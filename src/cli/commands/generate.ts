@@ -1,11 +1,14 @@
 import { Arguments } from 'yargs';
 
-import Builder from '../../index';
+import Builder from '../../Builder';
 
-interface IArguments {
-  dir: string;
-  type: string;
-}
+type IArguments = Arguments<{ dir: string; type: string }>;
+
+const generate = async ({ dir, type }: IArguments): Promise<void> => {
+  const builder = new Builder(dir, type);
+
+  await builder.generate();
+};
 
 export default {
   command: 'generate',
@@ -25,5 +28,5 @@ export default {
       default: '',
     },
   },
-  handler: ({ dir, type }: Arguments<IArguments>): Promise<void> => new Builder(dir, type).generate(),
+  handler: (args: IArguments): Promise<void> => generate(args),
 };

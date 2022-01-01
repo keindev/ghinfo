@@ -1,8 +1,8 @@
 export enum AvailableMediaFile {
   Icon = 'icon',
   Logo = 'logo',
+  Banner = 'banner',
   Demo = 'demo',
-  Preview = 'social-preview',
 }
 
 export interface ILinks {

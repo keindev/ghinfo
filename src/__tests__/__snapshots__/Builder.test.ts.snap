@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Builder Generate .ghinfo file 1`] = `
+"{
+  \\"name\\": \\"test-package\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"description\\": \\"Some description\\",
+  \\"keywords\\": [
+    \\"test\\",
+    \\"jest\\"
+  ],
+  \\"repo\\": \\"keindev/ghinfo\\",
+  \\"type\\": \\"test\\",
+  \\"links\\": {
+    \\"git\\": \\"https://github.com/keindev/ghinfo\\",
+    \\"npm\\": \\"https://www.npmjs.com/package/test-package\\"
+  },
+  \\"files\\": {
+    \\"logo\\": \\"media/logo.jpg\\",
+    \\"demo\\": \\"media/demo.gif\\"
+  }
+}"
+`;
