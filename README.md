@@ -1,4 +1,4 @@
-<p align="center"><img width="400" src="https://cdn.jsdelivr.net/gh/keindev/ghinfo/media/logo.svg" alt="GitHub GraphQL API client for JavaScript"></p>
+<p align="center"><img src="https://cdn.jsdelivr.net/gh/keindev/ghinfo/media/banner.svg" alt="Package logo"></p>
 
 <p align="center">
     <a href="https://github.com/keindev/ghinfo/actions"><img src="https://github.com/keindev/ghinfo/actions/workflows/build.yml/badge.svg" alt="Build Status"></a>

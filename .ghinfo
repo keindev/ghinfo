@@ -1,24 +1,24 @@
 {
   "name": "ghinfo",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "CLI util for generating a GitHub project information file",
   "keywords": [
     "automated",
-    "repo",
-    "info",
     "cli",
     "github",
+    "info",
+    "repo",
     "util"
   ],
   "repo": "keindev/ghinfo",
   "type": "utils",
   "links": {
+    "homepage": "https://github.com/keindev/ghinfo#readme",
     "git": "https://github.com/keindev/ghinfo",
-    "npm": "https://www.npmjs.com/package/ghinfo",
-    "homepage": "https://github.com/keindev/ghinfo#readme"
+    "npm": "https://www.npmjs.com/package/ghinfo"
   },
   "files": {
-    "logo": "media/logo.svg",
-    "social-preview": "media/social-preview.png"
+    "banner": "media/banner.svg",
+    "logo": "media/logo.svg"
   }
 }

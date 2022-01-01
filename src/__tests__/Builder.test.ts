@@ -1,31 +1,46 @@
+// @see https://github.com/facebook/jest/issues/9430
+// eslint-disable-next-line node/no-extraneous-import
+import { jest } from '@jest/globals';
+import { promises as fs } from 'fs';
+import glob from 'glob';
+import path from 'path';
+
 import Builder from '../Builder';
 
-const repo = 'keindev/media-info';
-const type = 'test';
-const paths = ['media/logo.svg', 'media/logo.jpg', 'media/social-preview.png'];
-let builder: Builder;
+jest.useFakeTimers();
+
+const PACKAGE = JSON.stringify({
+  name: 'test-package',
+  version: '1.0.0',
+  description: 'Some description',
+  keywords: ['test', 'jest'],
+  repository: {
+    type: 'git',
+    url: 'git+https://github.com/keindev/ghinfo.git',
+  },
+});
 
 describe('Builder', () => {
-  beforeEach(() => {
-    builder = new Builder(process.cwd(), type);
-  });
+  it('Generate .ghinfo file', async () => {
+    const builder = new Builder(process.cwd(), 'test');
+    let output = '';
 
-  it('Generate .ghinfo file', () => {
-    const pkg = { name: 'media-info', version: '1.0.0', description: 'test', keywords: ['test'] };
-    const info = builder.build(paths, pkg, repo);
+    jest
+      .spyOn(fs, 'readFile')
+      .mockImplementation(filePath =>
+        Promise.resolve(path.basename(filePath as string) === 'package.json' ? PACKAGE : '')
+      );
 
-    expect(info).toStrictEqual({
-      ...pkg,
-      repo,
-      type,
-      links: {
-        git: `https://github.com/${repo}`,
-        npm: `https://www.npmjs.com/package/${pkg.name}`,
-      },
-      files: {
-        logo: 'media/logo.jpg',
-        'social-preview': 'media/social-preview.png',
-      },
+    jest.spyOn(fs, 'writeFile').mockImplementation((filePath, data) => {
+      if (path.basename(filePath as string) === '.ghinfo') output = data as string;
+
+      return Promise.resolve();
     });
+
+    jest.spyOn(glob, 'sync').mockImplementation(() => ['media/logo.svg', 'media/logo.jpg', 'media/demo.gif']);
+
+    await builder.generate();
+
+    expect(output).toMatchSnapshot();
   });
 });

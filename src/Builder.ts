@@ -1,35 +1,33 @@
 import figures from 'figures';
 import { promises as fs } from 'fs';
-import globby from 'globby';
+import glob from 'glob';
+import Package from 'package-json-helper';
 import gh from 'parse-github-url';
 import path from 'path';
 import UpdateManager from 'stdout-update';
-import { PackageJson } from 'type-fest';
 
 import { AvailableMediaFile, IGitHubInfo } from './types';
 
 const TIMEOUT = 80;
 const INDENT = 2;
-
-/** @ignore */
 const manager = UpdateManager.getInstance();
-/** @ignore */
 const frames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+const GLOB_OPTIONS = { dot: true, strict: true, nodir: true };
 
 /** Generate .ghinfo files with repo, npm package and media information */
 export class Builder {
   #dir: string;
-  #type: string;
+  #frame = 0;
   #message = '';
   #timer: NodeJS.Timeout | null = null;
-  #frame = 0;
+  #type: string;
 
   /**
    * @param dir - Directory with media files
    * @param type - Repository content type
    */
   constructor(dir: string, type: string) {
-    this.#dir = path.relative(process.cwd(), dir);
+    this.#dir = dir;
     this.#type = type;
   }
 
@@ -38,21 +36,16 @@ export class Builder {
     this.start();
 
     try {
-      const paths = await globby([`${this.#dir}/**/*.*`], { gitignore: false });
-      const data = await fs.readFile(path.resolve(process.cwd(), 'package.json'), 'utf8');
-      const pkg = JSON.parse(data) as PackageJson;
-      const url = typeof pkg.repository === 'object' ? pkg.repository.url : pkg.repository;
+      const paths = glob.sync(`${this.#dir}/**/*.*`, GLOB_OPTIONS);
+      const pkg = new Package();
 
-      if (url) {
-        const git = gh(url);
+      await pkg.read();
+
+      if (pkg.repository?.url) {
+        const git = gh(pkg.repository?.url);
 
         if (git && git.repo) {
-          if (paths.length) {
-            await fs.writeFile(
-              path.relative(process.cwd(), '.ghinfo'),
-              JSON.stringify(this.build(paths, pkg, git.repo), null, INDENT)
-            );
-          }
+          await fs.writeFile('.ghinfo', JSON.stringify(this.build(paths, pkg, git.repo), null, INDENT));
 
           this.end();
         } else {
@@ -62,7 +55,11 @@ export class Builder {
         throw new Error('Package repository is undefined!');
       }
     } catch (error) {
-      this.error(error);
+      if (error instanceof Error) {
+        this.end([`${figures.cross} Error!`]);
+
+        throw error;
+      }
     }
   }
 
@@ -73,8 +70,8 @@ export class Builder {
    * @param repo - repository name
    * @returns .ghinfo content
    */
-  build(paths: string[], pkg: PackageJson, repo: string): IGitHubInfo {
-    const { name, version, description, homepage, keywords } = pkg;
+  private build(paths: string[], pkg: Package, repo: string): IGitHubInfo {
+    const { name, version, description, homepage } = pkg;
     const availableFiles = Object.values(AvailableMediaFile);
 
     if (!name) throw new Error('Package name is undefined!');
@@ -85,13 +82,13 @@ export class Builder {
       name,
       version,
       description,
-      keywords,
+      keywords: [...pkg.keywords.values()],
       repo,
       type: this.#type,
       links: {
+        homepage,
         git: `https://github.com/${repo}`,
         ...(pkg.private ? {} : { npm: `https://www.npmjs.com/package/${name}` }),
-        ...(homepage ? { homepage } : {}),
       },
       files: paths.reduce((acc, filePath) => {
         const { name: fileName } = path.parse(filePath);
@@ -99,14 +96,6 @@ export class Builder {
         return ~availableFiles.indexOf(fileName as AvailableMediaFile) ? { ...acc, [fileName]: filePath } : acc;
       }, {}),
     };
-  }
-
-  private start(): void {
-    manager.hook();
-
-    this.#timer = setInterval(() => {
-      manager.update([`${frames[(this.#frame = ++this.#frame % frames.length)]} process: ${this.#message}`]);
-    }, TIMEOUT);
   }
 
   private end(msg = [`${figures.tick} .ghinfo created!`]): void {
@@ -117,10 +106,12 @@ export class Builder {
     }
   }
 
-  private error(error: Error): never {
-    this.end([`${figures.cross} Error!`]);
+  private start(): void {
+    manager.hook();
 
-    throw error;
+    this.#timer = setInterval(() => {
+      manager.update([`${frames[(this.#frame = ++this.#frame % frames.length)]} process: ${this.#message}`]);
+    }, TIMEOUT);
   }
 }
 
