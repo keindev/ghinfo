@@ -1,6 +1,6 @@
 {
   "name": "ghinfo",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "CLI util for generating a GitHub project information file",
   "license": "MIT",
   "homepage": "https://github.com/keindev/ghinfo#readme",
