@@ -6,7 +6,7 @@ import gh from 'parse-github-url';
 import path from 'path';
 import UpdateManager from 'stdout-update';
 
-import { AvailableMediaFile, IGitHubInfo } from './types';
+import { AvailableMediaFile, IGitHubInfo } from './types.js';
 
 const TIMEOUT = 80;
 const INDENT = 2;

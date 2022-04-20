@@ -5,7 +5,7 @@ import { promises as fs } from 'fs';
 import glob from 'glob';
 import path from 'path';
 
-import Builder from '../Builder';
+import Builder from '../Builder.js';
 
 jest.useFakeTimers();
 
