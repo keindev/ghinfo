@@ -1,6 +1,6 @@
 import { Arguments } from 'yargs';
 
-import Builder from '../../Builder';
+import Builder from '../../Builder.js';
 
 type IArguments = Arguments<{ dir: string; type: string }>;
 
