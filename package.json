@@ -53,7 +53,7 @@
     "test:jest": "node --experimental-vm-modules node_modules/.bin/jest"
   },
   "dependencies": {
-    "figures": "^4.0.1",
+    "figures": "^5.0.0",
     "glob": "^8.0.1",
     "package-json-helper": "^4.0.5",
     "parse-github-url": "^1.0.2",
