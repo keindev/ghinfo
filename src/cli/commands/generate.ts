@@ -1,8 +1,11 @@
-import { Arguments } from 'yargs';
+import { ArgumentsCamelCase } from 'yargs';
 
 import Builder from '../../Builder.js';
 
-type IArguments = Arguments<{ dir: string; type: string }>;
+type IArguments = {
+  dir: string;
+  type: string;
+};
 
 const generate = async ({ dir, type }: IArguments): Promise<void> => {
   const builder = new Builder(dir, type);
@@ -28,5 +31,5 @@ export default {
       default: '',
     },
   },
-  handler: (args: IArguments): Promise<void> => generate(args),
+  handler: (args: ArgumentsCamelCase<IArguments>): Promise<void> => generate(args),
 };
