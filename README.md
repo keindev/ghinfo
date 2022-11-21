@@ -1,4 +1,4 @@
-<p align="center"><img src="https://cdn.jsdelivr.net/gh/keindev/ghinfo/media/banner.svg" alt="Package logo"></p>
+<p align="center"><img src="https://cdn.jsdelivr.net/gh/tagproject/art/packages/ghinfo/banner.svg" alt="Package logo"></p>
 
 <p align="center">
     <a href="https://github.com/keindev/ghinfo/actions"><img src="https://github.com/keindev/ghinfo/actions/workflows/build.yml/badge.svg" alt="Build Status"></a>
