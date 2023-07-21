@@ -6,7 +6,7 @@ import path from 'path';
 // eslint-disable-next-line node/no-extraneous-import
 import { jest } from '@jest/globals';
 
-import Builder from '../Builder';
+import Builder from '../Builder.js';
 
 jest.useFakeTimers();
 

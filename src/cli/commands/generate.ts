@@ -1,6 +1,6 @@
 import { ArgumentsCamelCase, Options } from 'yargs';
 
-import Builder from '../../Builder';
+import Builder from '../../Builder.js';
 
 export type IArguments = {
   dir: string;
