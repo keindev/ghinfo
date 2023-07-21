@@ -1,6 +1,6 @@
 {
   "name": "ghinfo",
-  "version": "3.0.9",
+  "version": "3.0.11",
   "description": "CLI util for generating a GitHub project information file",
   "keywords": [
     "automated",

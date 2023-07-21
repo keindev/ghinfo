@@ -1,6 +1,6 @@
 {
   "name": "ghinfo",
-  "version": "3.0.9",
+  "version": "3.0.11",
   "description": "CLI util for generating a GitHub project information file",
   "license": "MIT",
   "homepage": "https://github.com/keindev/ghinfo#readme",
@@ -61,11 +61,11 @@
   },
   "devDependencies": {
     "@tagproject/docs-shared-config": "^1.1.3",
-    "@tagproject/ts-package-shared-config": "^10.1.1",
+    "@tagproject/ts-package-shared-config": "^10.2.0",
     "@tagproject/vscode-shared-config": "^2.0.10",
     "@types/glob": "^8.1.0",
     "@types/jest": "^29.5.3",
-    "@types/node": "^20.4.2",
+    "@types/node": "^20.4.3",
     "@types/parse-github-url": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
