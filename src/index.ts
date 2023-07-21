@@ -1,1 +1,1 @@
-export { default } from './Builder.js';
+export { default } from './Builder';
