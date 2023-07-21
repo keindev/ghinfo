@@ -1,6 +1,6 @@
 import figures from 'figures';
 import { promises as fs } from 'fs';
-import glob from 'glob';
+import { glob } from 'glob';
 import Package from 'package-json-helper';
 import gh from 'parse-github-url';
 import path from 'path';
