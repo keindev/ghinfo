@@ -1,7 +1,7 @@
 import figures from 'figures';
 import { promises as fs } from 'fs';
 import { glob } from 'glob';
-import Package from 'package-json-helper';
+import { Package } from 'package-json-helper';
 import gh from 'parse-github-url';
 import path from 'path';
 import UpdateManager from 'stdout-update';
