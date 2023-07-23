@@ -1,4 +1,4 @@
-import { ArgumentsCamelCase, Options } from 'yargs';
+import { ArgumentsCamelCase, CommandModule, Options } from 'yargs';
 
 import Builder from '../../Builder.js';
 
@@ -13,9 +13,9 @@ const generate = async ({ dir, type }: IArguments): Promise<void> => {
   await builder.generate();
 };
 
-export default {
+export const command: CommandModule<{ [key: string]: Options }, IArguments> = {
   command: 'generate',
-  description: 'Generate .ghinfo file',
+  describe: 'Generate .ghinfo file',
   builder: {
     dir: { string: true, alias: 'd', description: 'Directory with media files', default: 'media' } satisfies Options,
     type: { string: true, alias: 't', description: 'Repository content type', default: '' } satisfies Options,
