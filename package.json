@@ -51,7 +51,7 @@
   "dependencies": {
     "figures": "^5.0.0",
     "glob": "^10.3.3",
-    "package-json-helper": "^5.0.2",
+    "package-json-helper": "^6.0.0",
     "parse-github-url": "^1.0.2",
     "stdout-update": "^3.1.1",
     "yargs": "^17.7.2"
