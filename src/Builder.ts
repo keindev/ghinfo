@@ -16,11 +16,11 @@ const GLOB_OPTIONS = { dot: true, strict: true, nodir: true };
 
 /** Generate .ghinfo files with repo, npm package and media information */
 export class Builder {
-  #dir: string;
+  readonly #dir: string;
   #frame = 0;
-  #message = '';
+  readonly #message = '';
   #timer: NodeJS.Timeout | null = null;
-  #type: string;
+  readonly #type: string;
 
   /**
    * @param dir - Directory with media files
