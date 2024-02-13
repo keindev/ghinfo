@@ -49,17 +49,17 @@
     "test:jest": "node --experimental-vm-modules node_modules/.bin/jest"
   },
   "dependencies": {
-    "figures": "^5.0.0",
-    "glob": "^10.3.3",
-    "package-json-helper": "^5.0.2",
+    "figures": "^6.0.1",
+    "glob": "^10.3.10",
+    "package-json-helper": "^6.0.0",
     "parse-github-url": "^1.0.2",
-    "stdout-update": "^3.1.1",
+    "stdout-update": "^4.0.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@tagproject/ts-package-shared-config": "^11.0.1",
+    "@tagproject/ts-package-shared-config": "^11.0.4",
     "@types/glob": "^8.1.0",
-    "@types/parse-github-url": "^1.0.0",
-    "ts-node": "^10.9.1"
+    "@types/parse-github-url": "^1.0.3",
+    "ts-node": "^10.9.2"
   }
 }
