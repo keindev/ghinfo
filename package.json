@@ -1,6 +1,6 @@
 {
   "name": "ghinfo",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "CLI util for generating a GitHub project information file",
   "license": "MIT",
   "homepage": "https://github.com/keindev/ghinfo#readme",
@@ -49,17 +49,16 @@
     "test:jest": "node --experimental-vm-modules node_modules/.bin/jest"
   },
   "dependencies": {
-    "figures": "^5.0.0",
-    "glob": "^10.3.3",
-    "package-json-helper": "^5.0.2",
+    "figures": "^6.0.1",
+    "glob": "^10.3.10",
+    "package-json-helper": "^6.0.0",
     "parse-github-url": "^1.0.2",
-    "stdout-update": "^3.1.1",
+    "stdout-update": "^4.0.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@tagproject/ts-package-shared-config": "^11.0.1",
-    "@types/glob": "^8.1.0",
-    "@types/parse-github-url": "^1.0.0",
-    "ts-node": "^10.9.1"
+    "@tagproject/ts-package-shared-config": "^11.0.4",
+    "@types/parse-github-url": "^1.0.3",
+    "ts-node": "^10.9.2"
   }
 }
