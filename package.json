@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "figures": "^6.0.1",
-    "glob": "^10.3.10",
+    "glob": "^11.0.0",
     "package-json-helper": "^6.0.0",
     "parse-github-url": "^1.0.2",
     "stdout-update": "^4.0.0",
